@@ -10,23 +10,21 @@ from sklearn.metrics import (
     r2_score
 )
 
-# Load trained model
 model = joblib.load("house_price_model.pkl")
 
-# Load testing data
 X_test = pd.read_csv("dataset/X_test.csv")
 y_test = pd.read_csv("dataset/y_test.csv")
 
-# Predict prices
+
 y_pred = model.predict(X_test)
 
-# Calculate metrics
+
 mae = mean_absolute_error(y_test, y_pred)
 mse = mean_squared_error(y_test, y_pred)
 rmse = np.sqrt(mse)
 r2 = r2_score(y_test, y_pred)
 
-# Display results
+
 print("\n===== MODEL EVALUATION =====")
 
 print("MAE:", mae)
@@ -34,7 +32,7 @@ print("MSE:", mse)
 print("RMSE:", rmse)
 print("R2 Score:", r2)
 
-# Compare actual and predicted prices
+
 comparison = pd.DataFrame({
     "Actual Price": y_test.values.flatten(),
     "Predicted Price": y_pred.flatten()
@@ -43,7 +41,6 @@ comparison = pd.DataFrame({
 print("\nActual vs Predicted:")
 print(comparison.head(10))
 
-# Create graph
 plt.figure(figsize=(8, 6))
 
 plt.scatter(y_test, y_pred, alpha=0.5)
