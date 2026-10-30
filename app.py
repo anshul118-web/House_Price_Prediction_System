@@ -1,29 +1,22 @@
-
 import streamlit as st
 import pandas as pd
 import joblib
-
-# Page configuration
 st.set_page_config(
     page_title="House Price Prediction",
     page_icon="🏠",
     layout="centered"
 )
-
-# Load model
 @st.cache_resource
 def load_model():
     return joblib.load("house_price_model.pkl")
 
 model = load_model()
 
-# Website heading
 st.title("🏠 House Price Prediction")
 st.write("Enter your house details to predict its estimated price.")
 
 st.divider()
 
-# Input fields
 st.subheader("Enter House Details")
 
 col1, col2 = st.columns(2)
@@ -76,7 +69,7 @@ with col2:
         value=-118.0
     )
 
-# Prediction button
+
 if st.button("Predict House Price", type="primary"):
 
     new_house = pd.DataFrame([{
@@ -90,13 +83,11 @@ if st.button("Predict House Price", type="primary"):
         "Longitude": Longitude
     }])
 
-    # Predict
+
     prediction = model.predict(new_house)[0]
 
-    # Convert into dollars
     price = prediction * 100000
 
-    # Display result
     st.success("Prediction Completed!")
 
     st.metric(
